@@ -87,15 +87,16 @@ impl Stream {
             let color = gradient.interpolate(i as f32 / self.count as f32);
 
             // Determine the entity starting x and y positions based on the direction of flow
+            let width_adjusted_i = i as f32 * config.mode.width() as f32;
             let (x, y) = match config.direction {
                 Direction::Down => (self.x, self.y - i as f32),
                 Direction::Up => (self.x, self.y + i as f32),
-                Direction::Right => (self.x - i as f32, self.y),
-                Direction::Left => (self.x + i as f32, self.y),
-                Direction::DiagonalRight => (self.x - i as f32, self.y - i as f32),
-                Direction::DiagonalRightReverse => (self.x + i as f32, self.y + i as f32),
-                Direction::DiagonalLeft => (self.x + i as f32, self.y - i as f32),
-                Direction::DiagonalLeftReverse => (self.x - i as f32, self.y + i as f32),
+                Direction::Right => (self.x - width_adjusted_i, self.y),
+                Direction::Left => (self.x + width_adjusted_i, self.y),
+                Direction::DiagonalRight => (self.x - width_adjusted_i, self.y - i as f32),
+                Direction::DiagonalRightReverse => (self.x + width_adjusted_i, self.y + i as f32),
+                Direction::DiagonalLeft => (self.x + width_adjusted_i, self.y - i as f32),
+                Direction::DiagonalLeftReverse => (self.x - width_adjusted_i, self.y + i as f32),
             };
 
             // Create the entity and add it to the entities vector
@@ -119,9 +120,10 @@ impl Stream {
             // by the next frame, except for the trailing entity. So we manually overwrite it so that
             // the stream doesn't leave a trail.
             if !config.leave_trail {
+                let space = " ".repeat(config.mode.width());
                 stdout
                     .queue(cursor::MoveTo(e.x as u16, e.y as u16))?
-                    .queue(Print(" "))?;
+                    .queue(Print(space))?;
             }
 
             // This is also a good time to check if the last entity is off the screen,

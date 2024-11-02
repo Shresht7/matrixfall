@@ -45,6 +45,14 @@ impl FromStr for Symbols {
 }
 
 impl Symbols {
+    /// Get the width of the character in the symbol set
+    pub fn width(&self) -> usize {
+        match self {
+            Self::Original | Self::Cursed => 2, // Katakana and Emojis
+            _ => 1,                             // Default to width of 1 for most characters
+        }
+    }
+
     /// Get a random character from the symbol set
     pub fn get_random(&self) -> char {
         match self {

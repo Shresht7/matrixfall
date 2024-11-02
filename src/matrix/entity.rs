@@ -25,6 +25,8 @@ pub struct Entity {
 
     /// The symbol the entity represents
     symbol: char,
+    /// Width of the symbol that is visible in the terminal
+    width: usize,
     /// The color of the symbol
     color: colors::RGBColor,
     /// The character set to use for the symbols
@@ -56,6 +58,7 @@ impl Entity {
             speed_y,
             color,
             symbol: ' ',
+            width: config.mode.width(),
             mode: config.mode.clone(),
             frame_count: 0,
             switch_interval: utils::random_between::<u16>(1, config.switch_interval * config.fps),
@@ -64,7 +67,7 @@ impl Entity {
 
     /// Rain. Updates the position of the [Entity] using the rain speed.
     pub fn rain(&mut self) {
-        self.x += self.speed_x;
+        self.x += self.speed_x * self.width as f32;
         self.y += self.speed_y;
     }
 
