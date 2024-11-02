@@ -26,7 +26,7 @@ pub struct Entity {
     /// The symbol the entity represents
     symbol: char,
     /// Width of the symbol that is visible in the terminal
-    width: usize,
+    pub width: usize,
     /// The color of the symbol
     color: colors::RGBColor,
     /// The character set to use for the symbols
@@ -93,7 +93,11 @@ impl Entity {
         stdout: &mut std::io::Stdout,
     ) -> std::io::Result<()> {
         // Don't render if the entity is off-screen
-        if self.x < 0.0 || self.x >= columns as f32 || self.y < 0.0 || self.y >= rows as f32 {
+        if self.x < 0.0
+            || self.x + self.width as f32 >= columns as f32
+            || self.y < 0.0
+            || self.y >= rows as f32
+        {
             return Ok(());
         }
 

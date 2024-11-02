@@ -131,11 +131,15 @@ impl Stream {
             let should_regenerate = match config.direction {
                 Direction::Down => e.y >= rows as f32,
                 Direction::Up => e.y < 0.0,
-                Direction::Right => e.x >= columns as f32,
+                Direction::Right => e.x + e.width as f32 >= columns as f32,
                 Direction::Left => e.x < 0.0,
                 Direction::DiagonalLeft => e.x < 0.0 && e.y >= rows as f32,
-                Direction::DiagonalLeftReverse => e.x >= columns as f32 && e.y < 0.0,
-                Direction::DiagonalRight => e.x >= columns as f32 && e.y >= rows as f32,
+                Direction::DiagonalLeftReverse => {
+                    e.x + e.width as f32 >= columns as f32 && e.y < 0.0
+                }
+                Direction::DiagonalRight => {
+                    e.x + e.width as f32 >= columns as f32 && e.y >= rows as f32
+                }
                 Direction::DiagonalRightReverse => e.x < 0.0 && e.y < 0.0,
             };
 
