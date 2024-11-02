@@ -119,7 +119,7 @@ impl Stream {
             // Clean up the last entity. As the stream moves down, all entities will be overwritten
             // by the next frame, except for the trailing entity. So we manually overwrite it so that
             // the stream doesn't leave a trail.
-            if !config.leave_trail {
+            if !config.leave_trail && e.x <= e.width as f32 {
                 let space = " ".repeat(config.mode.width());
                 stdout
                     .queue(cursor::MoveTo(e.x as u16, e.y as u16))?
@@ -132,7 +132,7 @@ impl Stream {
                 Direction::Down => e.y >= rows as f32,
                 Direction::Up => e.y < 0.0,
                 Direction::Right => e.x + e.width as f32 >= columns as f32,
-                Direction::Left => e.x < 0.0,
+                Direction::Left => e.x + (e.width as f32) < 0.0,
                 Direction::DiagonalLeft => e.x < 0.0 && e.y >= rows as f32,
                 Direction::DiagonalLeftReverse => {
                     e.x + e.width as f32 >= columns as f32 && e.y < 0.0
