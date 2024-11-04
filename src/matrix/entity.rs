@@ -93,11 +93,7 @@ impl Entity {
         stdout: &mut std::io::Stdout,
     ) -> std::io::Result<()> {
         // Don't render if the entity is off-screen
-        if self.x < 0.0
-            || self.x + self.width as f32 >= columns as f32
-            || self.y < 0.0
-            || self.y >= rows as f32
-        {
+        if self.is_offscreen(columns, rows) {
             return Ok(());
         }
 
@@ -112,5 +108,13 @@ impl Entity {
         }
 
         Ok(())
+    }
+
+    /// Returns true if the [Entity] is offscreen
+    fn is_offscreen(&mut self, columns: i32, rows: i32) -> bool {
+        self.x < 0.0
+            || self.x + self.width as f32 >= columns as f32
+            || self.y < 0.0
+            || self.y >= rows as f32
     }
 }
