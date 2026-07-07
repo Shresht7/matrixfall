@@ -36,11 +36,11 @@ impl FromStr for RGBColor {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s.starts_with('#') {
-            return RGBColor::from_hex_str(s);
+            RGBColor::from_hex_str(s)
         } else if s.contains(',') {
-            return RGBColor::from_rgb_str(s);
+            RGBColor::from_rgb_str(s)
         } else {
-            return RGBColor::from_named_color(s);
+            RGBColor::from_named_color(s)
         }
     }
 }
@@ -60,9 +60,9 @@ impl RGBColor {
         let parts: Vec<&str> = s.split(',').map(|part| part.trim()).collect();
         if parts.len() == 3 {
             if let (Ok(r), Ok(g), Ok(b)) = (parts[0].parse(), parts[1].parse(), parts[2].parse()) {
-                return Ok(Self(r, g, b));
+                Ok(Self(r, g, b))
             } else {
-                return Err(ParseErrorKind::InvalidFormat(s.to_string()));
+                Err(ParseErrorKind::InvalidFormat(s.to_string()))
             }
         } else {
             Err(ParseErrorKind::InvalidFormat(s.to_string()))
@@ -143,7 +143,7 @@ impl LinearGradient {
     /// Interpolate between two colors. The factor has to be between 0 and 1
     pub fn interpolate(&self, factor: f32) -> RGBColor {
         assert!(
-            factor >= 0.0 && factor <= 1.0,
+            (0.0..=1.0).contains(&factor),
             "The factor value must be between 0 and 1"
         );
         let delta = self.delta();

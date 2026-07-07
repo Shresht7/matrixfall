@@ -10,9 +10,9 @@ mod entity;
 mod stream;
 
 use crossterm::{
+    QueueableCommand,
     cursor::{self, MoveToNextLine},
     style::Print,
-    QueueableCommand,
 };
 use stream::Stream;
 
@@ -106,7 +106,7 @@ impl Matrix {
         }
 
         // Return the instance
-        return ret;
+        ret
     }
 
     /// The setup function is called once before the draw loop starts

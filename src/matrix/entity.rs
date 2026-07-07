@@ -1,6 +1,6 @@
+use crossterm::QueueableCommand;
 use crossterm::cursor;
 use crossterm::style::Print;
-use crossterm::QueueableCommand;
 
 use crate::config;
 use crate::helpers::{colors, utils};
@@ -84,7 +84,7 @@ impl Entity {
     /// If the `frame_count` has exceeded `switch_interval` switch the [Entity] symbol to
     /// another one from the character set.
     fn switch_symbol(&mut self) {
-        if self.frame_count % self.switch_interval == 0 {
+        if self.frame_count.is_multiple_of(self.switch_interval) {
             self.set_symbol();
         }
         self.frame_count += 1;
