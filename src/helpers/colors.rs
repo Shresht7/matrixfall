@@ -90,9 +90,9 @@ impl std::ops::Mul<f32> for RGBColor {
 
     fn mul(self, rhs: f32) -> Self::Output {
         RGBColor(
-            (self.r() as f32 * rhs).min(255.0).max(0.0) as u8,
-            (self.g() as f32 * rhs).min(255.0).max(0.0) as u8,
-            (self.b() as f32 * rhs).min(255.0).max(0.0) as u8,
+            (self.r() as f32 * rhs).clamp(0.0, 255.0) as u8,
+            (self.g() as f32 * rhs).clamp(0.0, 255.0) as u8,
+            (self.b() as f32 * rhs).clamp(0.0, 255.0) as u8,
         )
     }
 }
