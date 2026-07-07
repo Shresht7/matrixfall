@@ -26,7 +26,7 @@ pub struct Entity {
     /// The symbol the entity represents
     symbol: char,
     /// Width of the symbol that is visible in the terminal
-    pub width: usize,
+    width: usize,
     /// The color of the symbol
     color: colors::RGBColor,
     /// The character set to use for the symbols
@@ -63,6 +63,11 @@ impl Entity {
             frame_count: 0,
             switch_interval: utils::random_between::<u16>(1, config.switch_interval * config.fps),
         }
+    }
+
+    /// Returns the width of the entity's symbol in terminal columns
+    pub fn width(&self) -> usize {
+        self.width
     }
 
     /// Rain. Updates the position of the [Entity] using the rain speed.
