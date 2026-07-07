@@ -116,7 +116,7 @@ impl Entity {
     }
 
     /// Returns true if the [Entity] is offscreen
-    fn is_offscreen(&mut self, columns: i32, rows: i32) -> bool {
+    fn is_offscreen(&self, columns: i32, rows: i32) -> bool {
         self.x < 0.0
             || self.x + self.width as f32 >= columns as f32
             || self.y < 0.0
