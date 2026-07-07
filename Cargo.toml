@@ -1,6 +1,6 @@
 [package]
 name = "matrixfall"
-version = "0.4.0"
+version = "0.4.1"
 description = "The matrixfall effect in the terminal"
 authors = ["Shresht7"]
 repository = "https://github.com/Shresht7/matrixfall"
