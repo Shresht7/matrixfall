@@ -25,6 +25,8 @@ pub struct Entity {
 
     /// The symbol the entity represents
     symbol: char,
+    /// Width of the symbol that is visible in the terminal
+    width: usize,
     /// The color of the symbol
     color: colors::RGBColor,
     /// The character set to use for the symbols
@@ -56,15 +58,21 @@ impl Entity {
             speed_y,
             color,
             symbol: ' ',
+            width: config.mode.width(),
             mode: config.mode.clone(),
             frame_count: 0,
             switch_interval: utils::random_between::<u16>(1, config.switch_interval * config.fps),
         }
     }
 
+    /// Returns the width of the entity's symbol in terminal columns
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
     /// Rain. Updates the position of the [Entity] using the rain speed.
     pub fn rain(&mut self) {
-        self.x += self.speed_x;
+        self.x += self.speed_x * self.width as f32;
         self.y += self.speed_y;
     }
 
@@ -90,7 +98,7 @@ impl Entity {
         stdout: &mut std::io::Stdout,
     ) -> std::io::Result<()> {
         // Don't render if the entity is off-screen
-        if self.x < 0.0 || self.x >= columns as f32 || self.y < 0.0 || self.y >= rows as f32 {
+        if self.is_offscreen(columns, rows) {
             return Ok(());
         }
 
@@ -105,5 +113,13 @@ impl Entity {
         }
 
         Ok(())
+    }
+
+    /// Returns true if the [Entity] is offscreen
+    fn is_offscreen(&self, columns: i32, rows: i32) -> bool {
+        self.x < 0.0
+            || self.x + self.width as f32 >= columns as f32
+            || self.y < 0.0
+            || self.y >= rows as f32
     }
 }

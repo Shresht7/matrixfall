@@ -152,8 +152,11 @@ impl Matrix {
         )))?;
         // Iterate over each row and pre-render random faint symbols
         for _ in 0..self.rows {
-            let random_symbol_str =
-                String::from_iter((0..self.columns).map(|_| config.mode.get_random()));
+            let random_symbol_str = String::from_iter(
+                (0..self.columns)
+                    .step_by(config.mode.width())
+                    .map(|_| config.mode.get_random()),
+            );
             stdout
                 .queue(Print(random_symbol_str))?
                 .queue(MoveToNextLine(1))?;

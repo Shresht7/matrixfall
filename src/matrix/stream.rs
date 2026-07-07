@@ -87,15 +87,16 @@ impl Stream {
             let color = gradient.interpolate(i as f32 / self.count as f32);
 
             // Determine the entity starting x and y positions based on the direction of flow
+            let width_adjusted_i = i as f32 * config.mode.width() as f32;
             let (x, y) = match config.direction {
                 Direction::Down => (self.x, self.y - i as f32),
                 Direction::Up => (self.x, self.y + i as f32),
-                Direction::Right => (self.x - i as f32, self.y),
-                Direction::Left => (self.x + i as f32, self.y),
-                Direction::DiagonalRight => (self.x - i as f32, self.y - i as f32),
-                Direction::DiagonalRightReverse => (self.x + i as f32, self.y + i as f32),
-                Direction::DiagonalLeft => (self.x + i as f32, self.y - i as f32),
-                Direction::DiagonalLeftReverse => (self.x - i as f32, self.y + i as f32),
+                Direction::Right => (self.x - width_adjusted_i, self.y),
+                Direction::Left => (self.x + width_adjusted_i, self.y),
+                Direction::DiagonalRight => (self.x - width_adjusted_i, self.y - i as f32),
+                Direction::DiagonalRightReverse => (self.x + width_adjusted_i, self.y + i as f32),
+                Direction::DiagonalLeft => (self.x + width_adjusted_i, self.y - i as f32),
+                Direction::DiagonalLeftReverse => (self.x - width_adjusted_i, self.y + i as f32),
             };
 
             // Create the entity and add it to the entities vector
@@ -118,10 +119,11 @@ impl Stream {
             // Clean up the last entity. As the stream moves down, all entities will be overwritten
             // by the next frame, except for the trailing entity. So we manually overwrite it so that
             // the stream doesn't leave a trail.
-            if !config.leave_trail {
+            if !config.leave_trail && e.x >= 0.0 {
+                let space = " ".repeat(config.mode.width());
                 stdout
                     .queue(cursor::MoveTo(e.x as u16, e.y as u16))?
-                    .queue(Print(" "))?;
+                    .queue(Print(space))?;
             }
 
             // This is also a good time to check if the last entity is off the screen,
@@ -129,11 +131,15 @@ impl Stream {
             let should_regenerate = match config.direction {
                 Direction::Down => e.y >= rows as f32,
                 Direction::Up => e.y < 0.0,
-                Direction::Right => e.x >= columns as f32,
-                Direction::Left => e.x < 0.0,
+                Direction::Right => e.x + e.width() as f32 >= columns as f32,
+                Direction::Left => e.x + (e.width() as f32) < 0.0,
                 Direction::DiagonalLeft => e.x < 0.0 && e.y >= rows as f32,
-                Direction::DiagonalLeftReverse => e.x >= columns as f32 && e.y < 0.0,
-                Direction::DiagonalRight => e.x >= columns as f32 && e.y >= rows as f32,
+                Direction::DiagonalLeftReverse => {
+                    e.x + e.width() as f32 >= columns as f32 && e.y < 0.0
+                }
+                Direction::DiagonalRight => {
+                    e.x + e.width() as f32 >= columns as f32 && e.y >= rows as f32
+                }
                 Direction::DiagonalRightReverse => e.x < 0.0 && e.y < 0.0,
             };
 
