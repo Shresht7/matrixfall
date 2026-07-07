@@ -2,7 +2,7 @@
 
 The matrixfall effect in the terminal.
 
-![demo](./demo.gif)
+![demo](https://raw.githubusercontent.com/Shresht7/matrixfall/main/showcase/demo.gif)
 
 > [!NOTE]
 >
