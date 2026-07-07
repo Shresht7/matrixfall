@@ -1,6 +1,6 @@
+use crossterm::QueueableCommand;
 use crossterm::cursor;
 use crossterm::style::Print;
-use crossterm::QueueableCommand;
 
 use crate::config;
 use crate::helpers::{colors, direction::Direction, utils};
@@ -39,7 +39,7 @@ impl Stream {
             count: 10,
         };
         stream.generate_entities(config);
-        return stream;
+        stream
     }
 
     /// Generate the entities that constitute the stream
@@ -77,8 +77,8 @@ impl Stream {
 
         // Create the color gradient for the stream
         let gradient = colors::LinearGradient::new(
-            colors::RGBColor::from(config.stream_color),
-            colors::RGBColor::from(config.stream_color) * config.stream_color_gradient_factor, // Overloaded Operator for Scalar Multiplication
+            config.stream_color,
+            config.stream_color * config.stream_color_gradient_factor, // Overloaded Operator for Scalar Multiplication
         );
 
         // Create the following entities

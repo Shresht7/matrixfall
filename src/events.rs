@@ -12,7 +12,7 @@ pub enum Action {
 pub fn handle_events() -> std::io::Result<Action> {
     match crossterm::event::read()? {
         crossterm::event::Event::Key(event) if event.kind == KeyEventKind::Press => {
-            return Ok(handle_key_event(event))
+            return Ok(handle_key_event(event));
         }
         _ => (),
     }

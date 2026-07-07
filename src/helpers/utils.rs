@@ -13,7 +13,7 @@ pub fn ansi_rgb(s: &char, color: colors::RGBColor) -> String {
         color.r(),
         color.g(),
         color.b(),
-        s.to_string()
+        s
     )
 }
 

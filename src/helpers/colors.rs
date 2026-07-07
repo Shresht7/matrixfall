@@ -36,11 +36,11 @@ impl FromStr for RGBColor {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s.starts_with('#') {
-            return RGBColor::from_hex_str(s);
+            RGBColor::from_hex_str(s)
         } else if s.contains(',') {
-            return RGBColor::from_rgb_str(s);
+            RGBColor::from_rgb_str(s)
         } else {
-            return RGBColor::from_named_color(s);
+            RGBColor::from_named_color(s)
         }
     }
 }
@@ -60,9 +60,9 @@ impl RGBColor {
         let parts: Vec<&str> = s.split(',').map(|part| part.trim()).collect();
         if parts.len() == 3 {
             if let (Ok(r), Ok(g), Ok(b)) = (parts[0].parse(), parts[1].parse(), parts[2].parse()) {
-                return Ok(Self(r, g, b));
+                Ok(Self(r, g, b))
             } else {
-                return Err(ParseErrorKind::InvalidFormat(s.to_string()));
+                Err(ParseErrorKind::InvalidFormat(s.to_string()))
             }
         } else {
             Err(ParseErrorKind::InvalidFormat(s.to_string()))
@@ -90,9 +90,9 @@ impl std::ops::Mul<f32> for RGBColor {
 
     fn mul(self, rhs: f32) -> Self::Output {
         RGBColor(
-            (self.r() as f32 * rhs).min(255.0).max(0.0) as u8,
-            (self.g() as f32 * rhs).min(255.0).max(0.0) as u8,
-            (self.b() as f32 * rhs).min(255.0).max(0.0) as u8,
+            (self.r() as f32 * rhs).clamp(0.0, 255.0) as u8,
+            (self.g() as f32 * rhs).clamp(0.0, 255.0) as u8,
+            (self.b() as f32 * rhs).clamp(0.0, 255.0) as u8,
         )
     }
 }
@@ -106,6 +106,7 @@ pub struct LinearGradient {
     end: RGBColor,
 }
 
+#[allow(dead_code)]
 pub struct LinearGradientSteps<'a> {
     gradient: &'a LinearGradient,
     current: usize,
@@ -143,7 +144,7 @@ impl LinearGradient {
     /// Interpolate between two colors. The factor has to be between 0 and 1
     pub fn interpolate(&self, factor: f32) -> RGBColor {
         assert!(
-            factor >= 0.0 && factor <= 1.0,
+            (0.0..=1.0).contains(&factor),
             "The factor value must be between 0 and 1"
         );
         let delta = self.delta();
@@ -225,10 +226,8 @@ mod tests {
         assert_eq!(RGBColor::from_hex_str("#00FF00"), Ok(RGBColor(0, 255, 0)));
         assert_eq!(RGBColor::from_hex_str("#0000FF"), Ok(RGBColor(0, 0, 255)));
         assert!(
-            RGBColor::from_hex_str("#GGGGGG").is_err_and(|x| match x {
-                ParseErrorKind::InvalidHexValue(_) => true,
-                _ => false,
-            }),
+            RGBColor::from_hex_str("#GGGGGG")
+                .is_err_and(|x| { matches!(x, ParseErrorKind::InvalidHexValue(_)) }),
             "Invalid Hex Format"
         )
     }

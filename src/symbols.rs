@@ -16,7 +16,7 @@ pub enum Symbols {
     /// Decimal Numbers: From 0 to 9
     Decimal,
     /// ASCII Symbols: Printable characters from 33 to 126 (0x21 to 0x7E). (from '!' to '~', including A-Z, a-z, 0-9 etc.)
-    ASCII,
+    Ascii,
     /// Mathematical Symbols: Various mathematical characters like: ∐, ∑, ≠, →
     Math,
     /// Braille Symbols: Unicode range from 0x2840 to 0x2840 + 63 (64 Braille patterns) (e.g  ⠇, ⠾, ⣿)
@@ -36,7 +36,7 @@ impl FromStr for Symbols {
             "binary" | "bin" => Ok(Self::Binary),
             "decimal" | "numbers" | "digits" => Ok(Self::Decimal),
             "maths" | "math" | "mathematics" => Ok(Self::Math),
-            "ascii" | "text" | "english" => Ok(Self::ASCII),
+            "ascii" | "text" | "english" => Ok(Self::Ascii),
             "braille" | "dots" => Ok(Self::Braille),
             "emoji" | "cursed" => Ok(Self::Cursed),
             x => Ok(Self::Custom(x.to_string())),
@@ -58,22 +58,22 @@ impl Symbols {
         match self {
             Self::Original => {
                 let r = utils::random_between(0x30a0, 0x30a0 + 96) as u32;
-                return std::char::from_u32(r).unwrap_or('0');
+                std::char::from_u32(r).unwrap_or('0')
             }
 
             Self::Binary => {
                 let r = utils::random_between(0, 2);
-                return if r == 0 { '0' } else { '1' };
+                if r == 0 { '0' } else { '1' }
             }
 
             Self::Decimal => {
                 let r = utils::random_between(0, 10);
-                return std::char::from_digit(r, 10).unwrap_or('0');
+                std::char::from_digit(r, 10).unwrap_or('0')
             }
 
-            Self::ASCII => {
+            Self::Ascii => {
                 let r = utils::random_between(33, 127) as u32;
-                return std::char::from_u32(r).unwrap_or('0');
+                std::char::from_u32(r).unwrap_or('0')
             }
 
             Self::Math => {
@@ -85,22 +85,22 @@ impl Symbols {
                     2 => utils::random_between(0x2190, 0x21FF) as u32, // Arrows
                     _ => utils::random_between(0x27C0, 0x27EF) as u32, // Miscellaneous Mathematical Symbols
                 };
-                return std::char::from_u32(r).unwrap_or('0');
+                std::char::from_u32(r).unwrap_or('0')
             }
 
             Self::Braille => {
                 let r = utils::random_between(0x2840, 0x2840 + 63) as u32;
-                return std::char::from_u32(r).unwrap_or('0');
+                std::char::from_u32(r).unwrap_or('0')
             }
 
             Self::Cursed => {
                 let r = utils::random_between(0x1f300, 0x1f3f0) as u32;
-                return std::char::from_u32(r).unwrap_or('0');
+                std::char::from_u32(r).unwrap_or('0')
             }
 
             Self::Custom(s) => {
                 let r = utils::random_between(0, s.len());
-                return s.chars().nth(r).unwrap_or('0');
+                s.chars().nth(r).unwrap_or('0')
             }
         }
     }

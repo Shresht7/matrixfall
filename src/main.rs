@@ -2,9 +2,9 @@ use std::io::Write;
 
 use clap::Parser;
 use crossterm::{
-    cursor,
-    style::{style, Stylize},
-    terminal, QueueableCommand,
+    QueueableCommand, cursor,
+    style::{Stylize, style},
+    terminal,
 };
 
 mod config;
@@ -40,7 +40,7 @@ fn run(config: &config::Config) -> std::io::Result<()> {
     let (columns, rows) = terminal::size()?;
 
     //  Instantiate the matrix streams
-    let mut matrix = matrix::Matrix::new(rows, columns, &config);
+    let mut matrix = matrix::Matrix::new(rows, columns, config);
 
     // Setup the terminal before running the application
     setup(&mut stdout)?;
@@ -51,13 +51,13 @@ fn run(config: &config::Config) -> std::io::Result<()> {
     //  Render the Matrix-Rain on screen
     loop {
         //  Render each stream
-        matrix.render(&config, &mut stdout)?;
+        matrix.render(config, &mut stdout)?;
 
         // Handle events
-        if crossterm::event::poll(std::time::Duration::from_millis(1000 / config.fps as u64))? {
-            if let events::Action::Exit = events::handle_events()? {
-                break;
-            }
+        if crossterm::event::poll(std::time::Duration::from_millis(1000 / config.fps as u64))?
+            && let events::Action::Exit = events::handle_events()?
+        {
+            break;
         }
     }
 
