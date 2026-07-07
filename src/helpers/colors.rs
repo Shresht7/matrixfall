@@ -106,6 +106,7 @@ pub struct LinearGradient {
     end: RGBColor,
 }
 
+#[allow(dead_code)]
 pub struct LinearGradientSteps<'a> {
     gradient: &'a LinearGradient,
     current: usize,
@@ -225,10 +226,8 @@ mod tests {
         assert_eq!(RGBColor::from_hex_str("#00FF00"), Ok(RGBColor(0, 255, 0)));
         assert_eq!(RGBColor::from_hex_str("#0000FF"), Ok(RGBColor(0, 0, 255)));
         assert!(
-            RGBColor::from_hex_str("#GGGGGG").is_err_and(|x| match x {
-                ParseErrorKind::InvalidHexValue(_) => true,
-                _ => false,
-            }),
+            RGBColor::from_hex_str("#GGGGGG")
+                .is_err_and(|x| { matches!(x, ParseErrorKind::InvalidHexValue(_)) }),
             "Invalid Hex Format"
         )
     }
