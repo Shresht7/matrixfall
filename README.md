@@ -2,7 +2,7 @@
 
 The matrixfall effect in the terminal.
 
-![demo](./demo.gif)
+![demo](./showcase/demo.gif)
 
 > [!NOTE]
 >
