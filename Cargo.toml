@@ -7,11 +7,11 @@ repository = "https://github.com/Shresht7/matrix-rain"
 license = "MIT"
 keywords = ["cli", "command-line-utilities", "matrix-rain"]
 categories = ["command-line-utilities"]
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "4.0.26", features = ["derive"] }
-crossterm = "0.26"
-rand = "0.8.5"
+clap = { version = "4.6.1", features = ["derive"] }
+crossterm = "0.29.0"
+rand = "0.10.2"

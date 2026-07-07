@@ -1,4 +1,4 @@
-use rand::Rng;
+use rand::RngExt;
 
 use super::colors;
 
@@ -27,11 +27,8 @@ pub fn ansi_rgb(s: &char, color: colors::RGBColor) -> String {
 /// #### Panics
 ///
 /// Panics if `min` is equal to or greater than `max`.
-pub fn random_between<T: PartialOrd + rand::distributions::uniform::SampleUniform>(
-    min: T,
-    max: T,
-) -> T {
-    rand::thread_rng().gen_range(min..max)
+pub fn random_between<T: PartialOrd + rand::distr::uniform::SampleUniform>(min: T, max: T) -> T {
+    rand::rng().random_range(min..max)
 }
 
 #[cfg(test)]
