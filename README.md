@@ -83,17 +83,16 @@ Here are some examples of how to use the different configuration options:
 The different configuration options available in this project are:
 
 * `mode`: The character symbol set to use. Valid options include "Original", "Binary", "Decimal", "Math", "ASCII", "Braille", "Emoji", and custom sets like "abc123".
-* `stream_color`: The color of the streaming entities, specified as an RGB value (e.g., "0,255,70").
+* `stream_color`: The color of the streaming entities (e.g., `"0,255,70"`, `"#00FF00"`, or `"green"`).
 * `stream_color_gradient_factor`: The multiplier that describes the extent of the gradient in the stream color.
-* `leading_entity_color`: The color of the leading entity in a stream, specified as an RGB value (e.g., "200,255,200").
+* `leading_entity_color`: The color of the leading entity in a stream (e.g., `"200,255,200"`, `"#C8FFC8"`, or `"white"`).
 * `leave_trail`: A boolean option to leave the trail intact as the streams pass by.
 * `fps`: The frame rate to run at, specified as the number of frames per second.
+* `direction`: The direction of motion for the stream particles (e.g., `"down"`, `"up"`, `"left"`, `"right"`, `"diagonal-right"`, etc.).
 * `stream_min_count`: The minimum number of entities per stream.
 * `stream_max_count`: The maximum number of entities per stream.
 * `stream_spacing`: The spacing between the streams, specified as the number of columns between each stream.
 * `switch_interval`: The maximum number of seconds within which an entity randomly switches its symbol.
-
-These options are defined in the `src/config.rs` file.
 
 ### Modes
 
@@ -107,8 +106,6 @@ The different modes available for the `mode` option are:
 * "Braille" | "Dots": Braille patterns (e.g., ⠇, ⠾, ⣿)
 * "Emoji" | "Cursed": Emojis
 * Custom sets like "abc123": User-defined symbol set
-
-These modes are defined in the `src/config.rs` file.
 
 ### Customizing the Symbol Set
 
