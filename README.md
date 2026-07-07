@@ -1,7 +1,6 @@
-# Matrix-Rain
--------------
+# `matrixfall`
 
-The matrix-rain effect in the terminal.
+The matrixfall effect in the terminal.
 
 ![demo](./demo.gif)
 
@@ -23,13 +22,13 @@ The matrix-rain effect in the terminal.
 
 > [!NOTE]
 > 
-> To install and run Matrix-Rain, you will need to have Rust and Cargo installed on your system. You can install Rust and Cargo by following the instructions at [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install).
+> To install and run matrixfall, you will need to have Rust and Cargo installed on your system. You can install Rust and Cargo by following the instructions at [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install).
 
 You can clone the repository and build the project:
 
 ```sh
-git clone https://github.com/Shresht7/matrix-rain.git
-cd matrix-rain
+git clone https://github.com/Shresht7/matrixfall.git
+cd matrixfall
 cargo build --release
 ```
 
@@ -39,44 +38,44 @@ To run the project, use the following command:
 cargo run --release
 ```
 
-Or **alternatively**, you can also install `Matrix-Rain` using `cargo install` and add it to your `$PATH` variable for easy access:
+Or **alternatively**, you can also install `matrixfall` using `cargo install` and add it to your `$PATH` variable for easy access:
 
 ```sh
-cargo install --path . --name matrix-rain
+cargo install --path . --name matrixfall
 ```
 
-After installation, you can run Matrix-Rain from anywhere by adding the Cargo bin directory to your `$PATH` variable.
+After installation, you can run matrixfall from anywhere by adding the Cargo bin directory to your `$PATH` variable.
 
 ---
 
 ## 📖 Usage Instructions
 
-To use Matrix-Rain, you can run the project with the following command:
+To use matrixfall, you can run the project with the following command:
 
 ```sh
-matrix-rain [OPTIONS]
+matrixfall [OPTIONS]
 ```
 
 Here are some examples of how to use the different configuration options:
 
 - To use the original Katakana symbols with the default settings:
   ```sh
-  matrix-rain
+  matrixfall
   ```
 
 - To use binary symbols with a custom stream color and gradient:
   ```sh
-  matrix-rain --mode binary --stream-color 0,255,70 --stream-color-gradient-factor 0.5
+  matrixfall --mode binary --stream-color 0,255,70 --stream-color-gradient-factor 0.5
   ```
 
 - To use ASCII characters with a higher frame rate and leave a trail:
   ```sh
-  matrix-rain --mode ASCII --fps 120 --leave-trail
+  matrixfall --mode ASCII --fps 120 --leave-trail
   ```
 
 > [!TIP]
 > 
-> You can combine multiple options to customize the matrix-rain effect to your liking.
+> You can combine multiple options to customize the matrixfall effect to your liking.
 
 ### Configuration Options
 

@@ -48,7 +48,7 @@ fn run(config: &config::Config) -> std::io::Result<()> {
     // Setup the Matrix renderer
     matrix.setup(config, &mut stdout)?;
 
-    //  Render the Matrix-Rain on screen
+    //  Render the matrixfall on screen
     loop {
         //  Render each stream
         matrix.render(config, &mut stdout)?;

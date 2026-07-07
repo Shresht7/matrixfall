@@ -1,11 +1,11 @@
 [package]
-name = "matrix-rain"
+name = "matrixfall"
 version = "0.3.0"
-description = "The matrix-rain effect in the terminal"
+description = "The matrixfall effect in the terminal"
 authors = ["Shresht7"]
-repository = "https://github.com/Shresht7/matrix-rain"
+repository = "https://github.com/Shresht7/matrixfall"
 license = "MIT"
-keywords = ["cli", "command-line-utilities", "matrix-rain"]
+keywords = ["cli", "command-line-utilities", "matrixfall"]
 categories = ["command-line-utilities"]
 edition = "2024"
 
