@@ -2,11 +2,8 @@
 
 The matrixfall effect in the terminal.
 
-![demo](https://raw.githubusercontent.com/Shresht7/matrixfall/main/showcase/demo.gif)
+![Animated terminal demo of matrixfall](https://raw.githubusercontent.com/Shresht7/matrixfall/main/showcase/demo.gif)
 
-> [!NOTE]
->
-> Just a simple program I made while learning Rust!
 
 ## 🌟 Features
 
@@ -20,11 +17,19 @@ The matrixfall effect in the terminal.
 
 ## 🛠️ Installation
 
+Install a prebuilt binary from the [latest GitHub release](https://github.com/Shresht7/matrixfall/releases/latest).
+
 > [!NOTE]
 > 
 > To install and run matrixfall, you will need to have Rust and Cargo installed on your system. You can install Rust and Cargo by following the instructions at [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install).
 
-You can clone the repository and build the project:
+You can install matrixfall from [crates.io](https://crates.io/crates/matrixfall) using Cargo. To do this, run the following command in your terminal:
+
+```sh
+cargo install matrixfall
+```
+
+Alternatively, you can clone the repository and build the project from source:
 
 ```sh
 git clone https://github.com/Shresht7/matrixfall.git
@@ -38,17 +43,15 @@ To run the project, use the following command:
 cargo run --release
 ```
 
-Or **alternatively**, you can also install `matrixfall` using `cargo install` and add it to your `$PATH` variable for easy access:
+To install the checked-out version into Cargo's bin directory:
 
 ```sh
 cargo install --path . --name matrixfall
 ```
 
-After installation, you can run matrixfall from anywhere by adding the Cargo bin directory to your `$PATH` variable.
-
 ---
 
-## 📖 Usage Instructions
+## 📖 Usage
 
 To use matrixfall, you can run the project with the following command:
 
@@ -77,51 +80,118 @@ Here are some examples of how to use the different configuration options:
 > 
 > You can combine multiple options to customize the matrixfall effect to your liking.
 
+### Controls
+
+- `q`, `Esc`, or `Ctrl+C`: exit matrixfall.
+
 ### Configuration Options
 
-The different configuration options available in this project are:
+| Flag                             | Default       | Description                                                                      |
+| -------------------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `--mode`                         | `Original`    | Character symbol set. Use a built-in mode or any non-empty custom character set. |
+| `--stream-color`                 | `0,255,70`    | Stream color. Accepts `R,G,B`, `#RRGGBB`, or a named color such as `green`.      |
+| `--stream-color-gradient-factor` | `0.33`        | Multiplier controlling how much the stream color fades toward its tail.          |
+| `--leading-entity-color`         | `200,255,200` | Color of the leading character in each stream.                                   |
+| `--leave-trail`                  | off           | Retains characters after streams pass.                                           |
+| `--fps`                          | `60`          | Target frames per second.                                                        |
+| `--direction`                    | `down`        | Direction in which streams move.                                                 |
+| `--stream-min-count`             | `5`           | Minimum number of characters in a stream.                                        |
+| `--stream-max-count`             | `25`          | Maximum number of characters in a stream.                                        |
+| `--stream-spacing`               | `2`           | Number of terminal columns or rows between streams, depending on direction.      |
+| `--switch-interval`              | `1`           | Maximum number of seconds before a character changes randomly.                   |
 
-* `mode`: The character symbol set to use. Valid options include "Original", "Binary", "Decimal", "Math", "ASCII", "Braille", "Emoji", and custom sets like "abc123".
-* `stream_color`: The color of the streaming entities (e.g., `"0,255,70"`, `"#00FF00"`, or `"green"`).
-* `stream_color_gradient_factor`: The multiplier that describes the extent of the gradient in the stream color.
-* `leading_entity_color`: The color of the leading entity in a stream (e.g., `"200,255,200"`, `"#C8FFC8"`, or `"white"`).
-* `leave_trail`: A boolean option to leave the trail intact as the streams pass by.
-* `fps`: The frame rate to run at, specified as the number of frames per second.
-* `direction`: The direction of motion for the stream particles (e.g., `"down"`, `"up"`, `"left"`, `"right"`, `"diagonal-right"`, etc.).
-* `stream_min_count`: The minimum number of entities per stream.
-* `stream_max_count`: The maximum number of entities per stream.
-* `stream_spacing`: The spacing between the streams, specified as the number of columns between each stream.
-* `switch_interval`: The maximum number of seconds within which an entity randomly switches its symbol.
+### Colors
+
+`--stream-color` and `--leading-entity-color` accept:
+
+- RGB: `0,255,70`
+- Hex: `#00FF00`
+- Named colors: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, or `white`
+
+For example:
+
+```sh
+matrixfall --stream-color "#00FF00" --leading-entity-color white
+```
 
 ### Modes
 
-The different modes available for the `mode` option are:
+| Mode       | Aliases                | Symbols                                          |
+| ---------- | ---------------------- | ------------------------------------------------ |
+| `original` | `normal`, `katakana`   | Katakana characters, e.g. ア, カ, サ, ナ         |
+| `binary`   | `bin`                  | `0`, `1`                                         |
+| `decimal`  | `numbers`, `digits`    | `0` through `9`                                  |
+| `math`     | `maths`, `mathematics` | Mathematical symbols, e.g. ∐, ∑, ≠, →            |
+| `ascii`    | `text`, `english`      | Printable ASCII characters, from `!` through `~` |
+| `braille`  | `dots`                 | Braille patterns, e.g. ⠇, ⠾, ⣿                   |
+| `emoji`    | `cursed`               | Emoji characters                                 |
 
-* "Original" | "Normal" | "Katakana": Original Katakana Symbols (e.g., ア, カ, サ, ナ)
-* "Binary" | "Bin": 0s and 1s
-* "Decimal" | "Numbers" | "Digits": Decimal numbers from 0 to 9
-* "Math" | "Maths" | "Mathematics": Mathematical Symbols (e.g., ∐, ∑, ≠, →)
-* "ASCII" | "Text" | "English": ASCII Characters (from '!' to '~', including A-Z, a-z, 0-9, etc.)
-* "Braille" | "Dots": Braille patterns (e.g., ⠇, ⠾, ⣿)
-* "Emoji" | "Cursed": Emojis
-* Custom sets like "abc123": User-defined symbol set
+Any other value is treated as a custom symbol set.
 
-### Customizing the Symbol Set
+### Custom Symbol Sets
 
-To specify custom character sets for the `mode` option, you can use the `Custom` variant of the `Symbols` enum.
+Any value for `--mode` that is not a built-in mode is used as a custom set of characters. Matrixfall randomly selects from that set as streams render.
 
-Use the `--mode` option followed by your custom character set. For example, to use the custom character set "abc123", you would run the command:
 ```sh
-cargo run --release -- --mode abc123
+matrixfall --mode "abc123"
 ```
 
-The custom character set can be any string of characters you want to use. The program will randomly select characters from this set for the matrix rain effect.
+The command above renders only a, b, c, 1, 2, and 3.
 
-The custom character set is defined in the `src/config.rs` file and is handled by the `Symbols::Custom` variant in the `src/symbols.rs` file.
+### Directions
+
+| Value                    | Aliases              | Movement                |
+| ------------------------ | -------------------- | ----------------------- |
+| `down`                   | `vertical`           | Top to bottom           |
+| `up`                     | `vertical-reverse`   | Bottom to top           |
+| `left`                   | `horizontal`         | Right to left           |
+| `right`                  | `horizontal-reverse` | Left to right           |
+| `diagonal-left`          | `bottom-left`        | Toward the bottom-left  |
+| `diagonal-left-reverse`  | `top-right`          | Toward the top-right    |
+| `diagonal-right`         | `bottom-right`       | Toward the bottom-right |
+| `diagonal-right-reverse` | `top-left`           | Toward the top-left     |
+
+### Examples
+
+Use binary symbols with a green gradient:
+
+```sh
+matrixfall --mode binary --stream-color 0,255,70 --stream-color-gradient-factor 0.5
+```
+
+Run ASCII streams faster and retain their trail:
+
+```sh
+matrixfall --mode ascii --fps 120 --leave-trail
+```
+
+Move streams diagonally toward the bottom-right:
+
+```sh
+matrixfall --direction diagonal-right
+```
+
+Use a custom character set:
+```sh
+matrixfall --mode "abc123"
+```
+
+Use a blue color scheme with a white leading character:
+```sh
+matrixfall --stream-color "#008CFF" --leading-entity-color white
+```
 
 ---
 
-## Contributing
+## Terminal Compatibility
+
+matrixfall works best in a terminal with ANSI true-color support and a Unicode-capable font.
+
+Some symbol sets, especially `emoji`, may have different widths or appearances depending on your terminal and font.
+
+---
+
+## 📑 Contributing
 
 Contributions are welcome! If you would like to contribute to this project, please follow these guidelines:
 
@@ -130,6 +200,6 @@ Contributions are welcome! If you would like to contribute to this project, plea
 3. Ensure that all tests pass and the code is properly formatted.
 4. Submit a pull request with a clear description of your changes.
 
-## License
+## 📝 License
 
 This project is licensed under the [MIT License](./LICENSE). See the [`LICENSE`](./LICENSE) file for more information.
